@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:fooddelivery/constants.dart';
 import 'package:fooddelivery/screens/discover.dart';
 import 'package:fooddelivery/screens/homepage.dart';
 import 'package:fooddelivery/screens/orders.dart';
 
 int bottomSelectedIndex = 0;
+
 List<BottomNavigationBarItem> buildBottomNavBarItems() {
   return [
     BottomNavigationBarItem(icon: new Icon(Icons.home), label: 'Home'),
@@ -23,11 +26,9 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
-  late PageController _pageController;
 
   @override
   void initState() {
-    _pageController = PageController(initialPage: 0);
 
     super.initState();
   }
@@ -40,7 +41,7 @@ class _MainMenuState extends State<MainMenu> {
   void bottomTapped(int index) {
     setState(() {
       bottomSelectedIndex = index;
-      _pageController.animateToPage(index,
+      Constants.screensPageViewController.animateToPage(index,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
     });
   }
@@ -57,7 +58,7 @@ class _MainMenuState extends State<MainMenu> {
               child: PageView(
                 allowImplicitScrolling: true,
                 physics: AlwaysScrollableScrollPhysics(),
-                controller: _pageController,
+                controller: Constants.screensPageViewController,
                 onPageChanged: (index) {
                   setState(() {
                     bottomSelectedIndex = index;
@@ -70,14 +71,16 @@ class _MainMenuState extends State<MainMenu> {
         ),
       ),
       bottomNavigationBar: SizedBox(
+      
         child: BottomNavigationBar(
           backgroundColor: Colors.white,
           elevation: 5,
-          selectedIconTheme: IconThemeData(size: 30),
+          selectedIconTheme: IconThemeData(size: 30.sp),
           currentIndex: bottomSelectedIndex,
           items: buildBottomNavBarItems(),
           onTap: (index) {
-            bottomTapped(index);
+            Constants.screensPageViewController.animateToPage(index,
+                duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
           },
         ),
       ),
