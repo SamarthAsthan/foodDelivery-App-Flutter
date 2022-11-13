@@ -1,13 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery/constants.dart';
-import 'package:fooddelivery/mainmenu.dart';
 import 'package:fooddelivery/models/sellermodel.dart';
-import 'package:horizontal_card_pager/card_item.dart';
-import 'package:horizontal_card_pager/horizontal_card_pager.dart';
+import 'package:fooddelivery/utils/Auth_Service.dart';
 
 import '../utils/APIcalls.dart';
 
@@ -59,7 +58,7 @@ class MyHomePage extends StatelessWidget {
                                 ],
                               ),
                               Text(
-                                "Kelambakkam - Vandalur Rd",
+                                FirebaseAuth.instance.currentUser!.email!,
                                 style: TextStyle(
                                     fontSize: 12.sp,
                                     fontWeight: FontWeight.w400),
@@ -67,12 +66,17 @@ class MyHomePage extends StatelessWidget {
                             ],
                           ),
                           Spacer(),
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(25.0.sp),
-                            child: CachedNetworkImage(
-                              height: 35.h,  
-                                imageUrl:
-                                    "https://media-exp1.licdn.com/dms/image/C4D03AQH7nD5jgTYpUw/profile-displayphoto-shrink_800_800/0/1661285518630?e=2147483647&v=beta&t=qFFwNCo54W05xYCW3Vx3_OjzdYw2oAtFwo4filNvnxg"),
+                          InkWell(
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25.0.sp),
+                              child: CachedNetworkImage(
+                                  height: 35.h,
+                                  imageUrl:
+                                      "https://media-exp1.licdn.com/dms/image/C4D03AQH7nD5jgTYpUw/profile-displayphoto-shrink_800_800/0/1661285518630?e=2147483647&v=beta&t=qFFwNCo54W05xYCW3Vx3_OjzdYw2oAtFwo4filNvnxg"),
+                            ),
+                            onTap: () {
+                              AuthService().signOut();
+                            },
                           ),
                         ],
                       ),
@@ -165,7 +169,7 @@ class MyHomePage extends StatelessWidget {
                       Column(
                         children: [
                           SizedBox(
-                             height: 65.h,
+                            height: 65.h,
                             width: 65.w,
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(8.0.sp),
@@ -347,7 +351,6 @@ class HomeBottomList extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(2.0.sp),
                                           child: CachedNetworkImage(
-                                            
                                               imageUrl:
                                                   "https://rukminim1.flixcart.com/image/40/40/k7usyvk0/nut-dry-fruit/z/d/h/500-organic-cashews-mason-jar-cost-2-cost-original-imafpzw5tskvyvpe.jpeg?q=90"),
                                         )

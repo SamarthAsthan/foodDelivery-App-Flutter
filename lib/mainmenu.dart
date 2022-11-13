@@ -26,10 +26,8 @@ class MainMenu extends StatefulWidget {
 }
 
 class _MainMenuState extends State<MainMenu> {
-
   @override
   void initState() {
-
     super.initState();
   }
 
@@ -71,7 +69,6 @@ class _MainMenuState extends State<MainMenu> {
         ),
       ),
       bottomNavigationBar: SizedBox(
-      
         child: BottomNavigationBar(
           backgroundColor: Colors.white,
           elevation: 5,
