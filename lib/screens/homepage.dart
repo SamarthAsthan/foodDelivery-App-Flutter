@@ -250,7 +250,7 @@ class _SellerSliderState extends State<SellerSlider> {
                       child: Padding(
                         padding: EdgeInsets.all(8.0.sp),
                         child: CachedNetworkImage(
-                            imageUrl: items[itemIndex].image.toString()),
+                            imageUrl: items[itemIndex].photo.toString()),
                       ),
                     ),
                     Padding(
@@ -393,17 +393,6 @@ class HomeBottomList extends StatelessWidget {
                               style: TextStyle(
                                   fontSize: 13.sp, fontWeight: FontWeight.w700),
                             ),
-                            Container(
-                              width: 190.w,
-                              child: Text(
-                                items[itemIndex].description.toString(),
-                                maxLines: 2,
-                                overflow: TextOverflow.ellipsis,
-                                style: TextStyle(
-                                    fontSize: 11.sp,
-                                    fontWeight: FontWeight.w400),
-                              ),
-                            ),
                           ],
                         ),
                         ClipRRect(
@@ -419,7 +408,7 @@ class HomeBottomList extends StatelessWidget {
                               CachedNetworkImage(
                                 height: 80.h,
                                 width: 80.w,
-                                imageUrl: items[itemIndex].image.toString(),
+                                imageUrl: items[itemIndex].photo.toString(),
                               ),
                               SizedBox(
                                 height: 99.h,

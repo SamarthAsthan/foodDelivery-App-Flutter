@@ -3,25 +3,17 @@ import 'dart:ffi';
 class SellersDataModel {
   int? id;
   String? name;
-  String? description;
-  String? image;
+  String? photo;
   String? email;
-  bool? is_active;
+  String? location;
 
-  SellersDataModel(
-      {this.id,
-      this.name,
-      this.description,
-      this.image,
-      this.email,
-      this.is_active});
+  SellersDataModel({this.id, this.name, this.photo, this.email, this.location});
 
   SellersDataModel.fromJson(Map<String, dynamic> json) {
     id = json["id"];
     name = json["name"];
-    description = json["description"];
-    image = json["image"];
+    location = json["location"];
+    photo = json["photo"];
     email = json["email"];
-    is_active = json["is_active"];
   }
 }
