@@ -1,9 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.app.hungrain">
-    <user-permission android:name="android.permission.INTERNET"/>
-    
+    package="com.example.hungrain">
    <application
-        android:label="fooddelivery"
+        android:label="hungrain"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

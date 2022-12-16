@@ -4,11 +4,10 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:fooddelivery/constants.dart';
-import 'package:fooddelivery/models/sellermodel.dart';
-import 'package:fooddelivery/utils/Auth_Service.dart';
-
-import '../utils/APIcalls.dart';
+import 'package:hungrain/constants.dart';
+import 'package:hungrain/models/home_model.dart';
+import 'package:hungrain/services/APICalls.dart';
+import 'package:hungrain/services/authentication.dart';
 
 class MyHomePage extends StatelessWidget {
   @override
@@ -202,10 +201,6 @@ class MyHomePage extends StatelessWidget {
                     height: 5.h,
                   ),
                   const SellerSlider(),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  const HomeBottomList(),
                 ],
               )),
         ),
@@ -224,247 +219,225 @@ class SellerSlider extends StatefulWidget {
 class _SellerSliderState extends State<SellerSlider> {
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder(
-      future: ReadJsonData(),
+    return FutureBuilder<Welcome>(
+      future: GetHomeData(),
       builder: (context, data) {
         if (data.hasError) {
           return Center(
             child: Text("${data.error}"),
           );
         } else if (data.hasData) {
-          var items = data.data as List<SellersDataModel>;
-          return CarouselSlider.builder(
-            itemCount: items.length,
-            itemBuilder:
-                (BuildContext context, int itemIndex, int pageViewIndex) =>
-                    Card(
-              elevation: 0,
-              color: Colors.grey.withOpacity(.09),
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.sp)),
-              child: Container(
-                child: Center(
-                    child: Column(
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0.sp),
-                        child: CachedNetworkImage(
-                            imageUrl: items[itemIndex].photo.toString()),
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(2.0.sp),
-                      child: Text(
-                        items[itemIndex].name.toString(),
-                        style: TextStyle(
-                            fontSize: 20.sp, fontWeight: FontWeight.w800),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5.h,
-                    )
-                  ],
-                )),
-              ),
-            ),
-            options: CarouselOptions(
-              enlargeCenterPage: true,
-              autoPlayAnimationDuration: const Duration(milliseconds: 500),
-              viewportFraction: 0.75,
-              autoPlay: true,
-              height: 120.0.h,
-            ),
-          );
-        } else {
-          return SizedBox(
-              height: 150.h,
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const CupertinoActivityIndicator(),
-                  Padding(
-                    padding: EdgeInsets.all(8.0.sp),
-                    child: Text("Please wait."),
-                  )
-                ],
-              ));
-        }
-      },
-    );
-  }
-}
-
-class HomeBottomList extends StatelessWidget {
-  const HomeBottomList({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    int itemIndex;
-    return FutureBuilder(
-      future: ReadJsonData(),
-      builder: (context, data) {
-        if (data.hasError) {
-          return Center(
-            child: Text("${data.error}"),
-          );
-        } else if (data.hasData) {
-          var items = data.data as List<SellersDataModel>;
-          return ListView.builder(
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-            itemCount: items.length,
-            itemBuilder: (
-              BuildContext context,
-              itemIndex,
-            ) =>
-                SizedBox(
-              height: 120.h,
-              width: double.infinity,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.fromLTRB(
-                      15.w,
-                      0.h,
-                      15.w,
-                      0.h,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          final items = data.data;
+          return Column(
+            children: [
+              CarouselSlider.builder(
+                itemCount: items?.sellers.length,
+                itemBuilder:
+                    (BuildContext context, int itemIndex, int pageViewIndex) =>
+                        Card(
+                  elevation: 0,
+                  color: Colors.grey.withOpacity(.09),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20.sp)),
+                  child: Container(
+                    child: Center(
+                        child: Column(
                       children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  height: 15.h,
-                                  width: 15.w,
-                                  child: itemIndex % 2 == 0
-                                      ? ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(2.0.sp),
-                                          child: CachedNetworkImage(
-                                              imageUrl:
-                                                  "https://rukminim1.flixcart.com/image/40/40/k7usyvk0/nut-dry-fruit/z/d/h/500-organic-cashews-mason-jar-cost-2-cost-original-imafpzw5tskvyvpe.jpeg?q=90"),
-                                        )
-                                      : ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(3.0.sp),
-                                          child: CachedNetworkImage(
-                                              imageUrl:
-                                                  "https://newasianvillagedelivery.com/assets/restaurantcmswebsite/images/nv-icon.jpg"),
-                                        ),
-                                ),
-                                SizedBox(
-                                  width: 5.w,
-                                ),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.red.shade400,
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(2.0.sp),
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(2.0.sp),
-                                    child: Text(
-                                      "Best Selling",
-                                      style: TextStyle(
-                                          color: Colors.white, fontSize: 10.sp),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Text(
-                              items[itemIndex].name.toString(),
-                              style: TextStyle(
-                                  fontSize: 17.sp, fontWeight: FontWeight.w600),
-                            ),
-                            Text(
-                              "Rs 100",
-                              style: TextStyle(
-                                  fontSize: 13.sp, fontWeight: FontWeight.w700),
-                            ),
-                          ],
+                        Expanded(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0.sp),
+                            child: CachedNetworkImage(
+                                imageUrl:
+                                    items!.sellers[itemIndex].photo.toString()),
+                          ),
                         ),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0.sp),
-                          child: Stack(
-                            alignment: Alignment.center,
-                            children: [
-                              Container(
-                                color: Colors.grey.withOpacity(.09),
-                                height: 90.h,
-                                width: 90.w,
-                              ),
-                              CachedNetworkImage(
-                                height: 80.h,
-                                width: 80.w,
-                                imageUrl: items[itemIndex].photo.toString(),
-                              ),
-                              SizedBox(
-                                height: 99.h,
-                                child: Align(
-                                  alignment: Alignment.bottomCenter,
-                                  child: Container(
-                                    width: 50.w,
-                                    height: 20.h,
-                                    decoration: BoxDecoration(
-                                      color: Colors.red.shade400,
-                                      borderRadius: BorderRadius.all(
-                                        Radius.circular(2.0.sp),
-                                      ),
+                        Padding(
+                          padding: EdgeInsets.all(2.0.sp),
+                          child: Text(
+                            items.sellers[itemIndex].name.toString(),
+                            style: TextStyle(
+                                fontSize: 20.sp, fontWeight: FontWeight.w800),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 5.h,
+                        )
+                      ],
+                    )),
+                  ),
+                ),
+                options: CarouselOptions(
+                  enlargeCenterPage: true,
+                  autoPlayAnimationDuration: const Duration(milliseconds: 500),
+                  viewportFraction: 0.75,
+                  autoPlay: true,
+                  height: 120.0.h,
+                ),
+              ),
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: items!.items.length,
+                itemBuilder: (
+                  BuildContext context,
+                  itemIndex,
+                ) =>
+                    SizedBox(
+                  height: 120.h,
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.fromLTRB(
+                          15.w,
+                          0.h,
+                          15.w,
+                          0.h,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      height: 15.h,
+                                      width: 15.w,
+                                      child: itemIndex % 2 == 0
+                                          ? ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(2.0.sp),
+                                              child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      "https://rukminim1.flixcart.com/image/40/40/k7usyvk0/nut-dry-fruit/z/d/h/500-organic-cashews-mason-jar-cost-2-cost-original-imafpzw5tskvyvpe.jpeg?q=90"),
+                                            )
+                                          : ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(3.0.sp),
+                                              child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      "https://newasianvillagedelivery.com/assets/restaurantcmswebsite/images/nv-icon.jpg"),
+                                            ),
                                     ),
-                                    child: Padding(
-                                      padding: EdgeInsets.all(2.0.sp),
-                                      child: Align(
-                                        alignment: Alignment.center,
+                                    SizedBox(
+                                      width: 5.w,
+                                    ),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: Colors.red.shade400,
+                                        borderRadius: BorderRadius.all(
+                                          Radius.circular(2.0.sp),
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: EdgeInsets.all(2.0.sp),
                                         child: Text(
-                                          "ADD +",
+                                          items.items[itemIndex].seller.name
+                                              .toString(),
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontSize: 10.sp),
                                         ),
                                       ),
                                     ),
+                                  ],
+                                ),
+                                Container(
+                                  width: 210,
+                                  child: Text(
+                                    items.items[itemIndex].name.toString(),
+                                    style: TextStyle(
+                                        fontSize: 15.sp,
+                                        fontWeight: FontWeight.w600),
                                   ),
                                 ),
+                                Text(
+                                  "Rs ${items.items[itemIndex].price}",
+                                  style: TextStyle(
+                                      fontSize: 13.sp,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            ),
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(20.0.sp),
+                              child: Stack(
+                                alignment: Alignment.center,
+                                children: [
+                                  Container(
+                                    color: Colors.grey.withOpacity(.09),
+                                    height: 90.h,
+                                    width: 90.w,
+                                  ),
+                                  CachedNetworkImage(
+                                    fit: BoxFit.fill,
+                                    height: 100.h,
+                                    width: 90.w,
+                                    imageUrl:
+                                        items.items[itemIndex].photo.toString(),
+                                  ),
+                                  SizedBox(
+                                    height: 99.h,
+                                    child: Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: Container(
+                                        width: 50.w,
+                                        height: 20.h,
+                                        decoration: BoxDecoration(
+                                          color: Colors.red.shade400,
+                                          borderRadius: BorderRadius.all(
+                                            Radius.circular(2.0.sp),
+                                          ),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(2.0.sp),
+                                          child: Align(
+                                            alignment: Alignment.center,
+                                            child: Text(
+                                              "ADD +",
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 10.sp),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      const Divider()
+                    ],
                   ),
-                  const Divider()
-                ],
-              ),
-            ),
+                ),
+              )
+            ],
           );
         } else {
           return SizedBox(
-              height: 200.h,
-              width: double.infinity,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                // ignore: prefer_const_literals_to_create_immutables
-                children: [
-                  const CupertinoActivityIndicator(),
-                  Padding(
-                    padding: EdgeInsets.all(8.0.sp),
-                    child: Text("Please wait."),
-                  )
-                ],
-              ));
+            height: 150.h,
+            width: double.infinity,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              // ignore: prefer_const_literals_to_create_immutables
+              children: [
+                const CupertinoActivityIndicator(),
+                Padding(
+                  padding: EdgeInsets.all(8.0.sp),
+                  child: Text("Please wait."),
+                )
+              ],
+            ),
+          );
         }
       },
     );
