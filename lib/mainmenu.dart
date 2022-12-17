@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery/constants.dart';
-import 'package:fooddelivery/screens/discover.dart';
-import 'package:fooddelivery/screens/homepage.dart';
-import 'package:fooddelivery/screens/orders.dart';
+import 'package:fooddelivery/views/discover.dart';
+import 'package:fooddelivery/views/homepage.dart';
+import 'package:fooddelivery/views/orders.dart';
 
 int bottomSelectedIndex = 0;
 

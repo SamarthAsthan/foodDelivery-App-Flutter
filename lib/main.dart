@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery/mainmenu.dart';
-import 'package:fooddelivery/screens/homepage.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:fooddelivery/services/loginRequest.dart';
 import 'package:fooddelivery/utils/Auth_Service.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  loginRequest().sendRequest();
   runApp(const MyApp());
 }
 

@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:fooddelivery/mainmenu.dart';
-import 'package:fooddelivery/screens/homepage.dart';
-import 'package:fooddelivery/screens/loginscreen.dart';
+import 'package:fooddelivery/views/loginscreen.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
