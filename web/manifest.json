@@ -1,6 +1,6 @@
 {
-    "name": "hungrain",
-    "short_name": "hungrain",
+    "name": "fooddelivery",
+    "short_name": "fooddelivery",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,4 +1,4 @@
-package com.example.hungrain
+package com.app.hungrain
 
 import io.flutter.embedding.android.FlutterActivity
 
