@@ -63,21 +63,21 @@ class Item {
 
 class Seller {
   Seller({
-    required this.id,
+    required this.index,
     required this.name,
     required this.location,
     required this.photo,
     required this.email,
   });
 
-  int? id;
+  int? index;
   String? name;
   String? location;
   String? photo;
   String? email;
 
   factory Seller.fromJson(Map<String, dynamic> json) => Seller(
-        id: json["id"],
+        index: json["index"],
         name: json["name"],
         location: json["location"],
         photo: json["photo"],
@@ -85,7 +85,7 @@ class Seller {
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
+        "index": index,
         "name": name,
         "location": location,
         "photo": photo,

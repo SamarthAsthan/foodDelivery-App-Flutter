@@ -10,7 +10,7 @@ class SellersDataModel {
   SellersDataModel({this.id, this.name, this.photo, this.email, this.location});
 
   SellersDataModel.fromJson(Map<String, dynamic> json) {
-    id = json["id"];
+    id = json["index"];
     name = json["name"];
     location = json["location"];
     photo = json["photo"];

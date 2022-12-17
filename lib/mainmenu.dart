@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fooddelivery/constants.dart';
+import 'package:fooddelivery/services/loginRequest.dart';
 import 'package:fooddelivery/views/discover.dart';
 import 'package:fooddelivery/views/homepage.dart';
 import 'package:fooddelivery/views/orders.dart';
@@ -14,7 +15,7 @@ List<BottomNavigationBarItem> buildBottomNavBarItems() {
       icon: new Icon(Icons.search),
       label: 'Search',
     ),
-    BottomNavigationBarItem(icon: Icon(Icons.add_box), label: 'Orders'),
+    BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Me'),
   ];
 }
 
@@ -28,6 +29,7 @@ class MainMenu extends StatefulWidget {
 class _MainMenuState extends State<MainMenu> {
   @override
   void initState() {
+    loginRequest().sendRequest();
     super.initState();
   }
 
@@ -48,14 +50,13 @@ class _MainMenuState extends State<MainMenu> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: Colors.white,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Expanded(
               child: PageView(
                 allowImplicitScrolling: true,
-                physics: AlwaysScrollableScrollPhysics(),
+                physics: NeverScrollableScrollPhysics(),
                 controller: Constants.screensPageViewController,
                 onPageChanged: (index) {
                   setState(() {
@@ -71,6 +72,7 @@ class _MainMenuState extends State<MainMenu> {
       bottomNavigationBar: SizedBox(
         child: BottomNavigationBar(
           backgroundColor: Colors.white,
+          iconSize: 20,
           elevation: 5,
           selectedIconTheme: IconThemeData(size: 30.sp),
           currentIndex: bottomSelectedIndex,

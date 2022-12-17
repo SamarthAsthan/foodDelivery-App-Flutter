@@ -4,11 +4,11 @@ import 'package:fooddelivery/mainmenu.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:fooddelivery/services/loginRequest.dart';
 import 'package:fooddelivery/utils/Auth_Service.dart';
+import 'package:get/get.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  loginRequest().sendRequest();
   runApp(const MyApp());
 }
 
@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {
-        return MaterialApp(
+        return GetMaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'First Method',
           // You can use the library anywhere in the app even in theme
