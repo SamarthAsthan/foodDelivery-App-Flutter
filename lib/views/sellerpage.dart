@@ -25,13 +25,12 @@ class SellerPage extends StatelessWidget {
         color: ColorPalette.backGround,
         child: FutureBuilder(
           future: GetSellerPageData(seller_id),
-          builder: (context, data) {
-            if (data.hasError) {
+          builder: (context, snapshot) {
+            if (snapshot.hasError) {
               return Center(
-                child: Text("${data.error}"),
+                child: Text("${snapshot.error}"),
               );
-            } else if (data.hasData) {
-              final items = data.data;
+            } else if (snapshot.hasData) {
               return SingleChildScrollView(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -40,9 +39,14 @@ class SellerPage extends StatelessWidget {
                       Stack(
                         alignment: AlignmentDirectional.bottomStart,
                         children: [
-                          CachedNetworkImage(
-                              imageUrl:
-                                  "https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg"),
+                          Container(
+                            height: 212.h,
+                            width: double.infinity,
+                            child: CachedNetworkImage(
+                                fit: BoxFit.fill,
+                                imageUrl:
+                                    "https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg"),
+                          ),
                           Container(
                             height: 212.h,
                             width: double.infinity,
@@ -56,7 +60,8 @@ class SellerPage extends StatelessWidget {
                                   child: CachedNetworkImage(
                                       height: 100.h,
                                       width: 100.w,
-                                      imageUrl: items!.photo),
+                                      imageUrl:
+                                          snapshot.data!.photo.toString()),
                                 ),
                                 SizedBox(
                                   width: 10,
@@ -65,17 +70,17 @@ class SellerPage extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      items.name,
+                                      snapshot.data!.name.toString(),
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 20.sp),
                                     ),
                                     Text(
-                                      items.email,
+                                      snapshot.data!.email.toString(),
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 20.sp),
                                     ),
                                     Text(
-                                      items.location,
+                                      snapshot.data!.location.toString(),
                                       style: TextStyle(
                                           color: Colors.white, fontSize: 20.sp),
                                     ),
@@ -98,22 +103,21 @@ class SellerPage extends StatelessWidget {
                         padding: EdgeInsets.zero,
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
-                        itemCount: items.items.length,
+                        itemCount: snapshot.data!.items?.length,
                         itemBuilder: (
                           BuildContext context,
                           itemIndex,
                         ) =>
-                            SizedBox(
-                          width: double.infinity,
+                            Card(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               Padding(
                                 padding: EdgeInsets.fromLTRB(
                                   15.w,
-                                  0.h,
+                                  5.h,
                                   15.w,
-                                  0.h,
+                                  5.h,
                                 ),
                                 child: Row(
                                   mainAxisAlignment:
@@ -161,7 +165,8 @@ class SellerPage extends StatelessWidget {
                                               child: Padding(
                                                 padding: EdgeInsets.all(2.0.sp),
                                                 child: Text(
-                                                  items.items[itemIndex].name
+                                                  snapshot.data!
+                                                      .items![itemIndex].name
                                                       .toString(),
                                                   style: TextStyle(
                                                       color: Colors.white,
@@ -174,7 +179,8 @@ class SellerPage extends StatelessWidget {
                                         Container(
                                           width: 210,
                                           child: Text(
-                                            items.items[itemIndex].name
+                                            snapshot
+                                                .data!.items![itemIndex].name
                                                 .toString(),
                                             style: TextStyle(
                                                 fontSize: 15.sp,
@@ -182,7 +188,7 @@ class SellerPage extends StatelessWidget {
                                           ),
                                         ),
                                         Text(
-                                          "Rs ${items.items[itemIndex].price}",
+                                          "Rs ${snapshot.data!.items![itemIndex].price}",
                                           style: TextStyle(
                                               fontSize: 13.sp,
                                               fontWeight: FontWeight.w700),
@@ -204,8 +210,8 @@ class SellerPage extends StatelessWidget {
                                             fit: BoxFit.cover,
                                             height: 90.h,
                                             width: 90.w,
-                                            imageUrl: items
-                                                .items[itemIndex].photo
+                                            imageUrl: snapshot
+                                                .data!.items![itemIndex].photo
                                                 .toString(),
                                           ),
                                           SizedBox(
@@ -244,7 +250,6 @@ class SellerPage extends StatelessWidget {
                                   ],
                                 ),
                               ),
-                              const Divider()
                             ],
                           ),
                         ),

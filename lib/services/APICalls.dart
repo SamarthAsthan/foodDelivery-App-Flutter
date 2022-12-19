@@ -2,7 +2,9 @@ import 'dart:convert';
 
 import 'package:fooddelivery/constants.dart';
 import 'package:fooddelivery/models/home_model.dart';
+import 'package:fooddelivery/models/search_model.dart';
 import 'package:fooddelivery/models/seller_page_model.dart';
+import 'package:fooddelivery/models/sellermodel.dart';
 import 'package:fooddelivery/models/user_orders_model.dart';
 import 'package:http/http.dart' as http;
 
@@ -35,11 +37,18 @@ Future<UserOrders> GetUserOrderData() async {
   return userOrders;
 }
 
-Future<SellerPage> GetSellerPageData(seller_id) async {
+Future<sellerPage2> GetSellerPageData(seller_id) async {
   final url = "$baseUrl/seller/getseller/$seller_id";
   final reponse = await http.get(Uri.parse(url));
-  final body = reponse.body;
-  final sellerPage = sellerPageFromJson(body);
-  //print(sellerPage);
-  return sellerPage;
+  final body = jsonDecode(reponse.body.toString());
+
+  return sellerPage2.fromJson(body);
+}
+
+Future<SearchModel> GetSearchData(term) async {
+  final url = "$baseUrl/user/search?search_term=$term";
+  final reponse = await http.get(Uri.parse(url));
+  final body = jsonDecode(reponse.body.toString());
+
+  return SearchModel.fromJson(body);
 }

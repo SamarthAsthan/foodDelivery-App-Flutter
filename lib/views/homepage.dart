@@ -113,6 +113,7 @@ class _MyHomePageState extends State<MyHomePage>
                                     "Search 'Pizza'",
                                     style: TextStyle(
                                         fontSize: 15.sp,
+                                        color: Colors.grey.shade700,
                                         fontWeight: FontWeight.w700),
                                   ),
                                 ],
@@ -126,10 +127,12 @@ class _MyHomePageState extends State<MyHomePage>
                           ),
                         ),
                       ),
-                      onTap: () {
-                        Constants.screensPageViewController.animateToPage(1,
+                      onTap: () async {
+                        await Constant.screensPageViewController.animateToPage(
+                            1,
                             duration: Duration(milliseconds: 10),
                             curve: Curves.easeInOut);
+                        Constant.textFieldfocusNode.requestFocus();
                       },
                     ),
                   ),
@@ -384,10 +387,11 @@ class _SellerSliderState extends State<SellerSlider> {
                   itemIndex,
                 ) =>
                     InkWell(
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(5.0),
+                    child: Card(
+                      shadowColor: Colors.red,
+                      elevation: 2,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -448,7 +452,6 @@ class _SellerSliderState extends State<SellerSlider> {
                                   ]),
                             ],
                           ),
-                          Divider()
                         ],
                       ),
                     ),

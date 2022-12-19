@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 String baseUrl = "http://3.110.122.84";
 
-class Constants {
+class Constant {
   static String baseUrl = "http://3.110.122.84";
   static String blogUrl = "${baseUrl}blog/?";
   static const backGround = Color.fromARGB(255, 236, 236, 236);
@@ -14,6 +14,10 @@ class Constants {
       PageController(viewportFraction: 1, keepPage: true);
   static PageController screensPageViewController =
       PageController(viewportFraction: 1, keepPage: true);
+
+  static TextEditingController textFieldcontroller = TextEditingController();
+
+  static FocusNode textFieldfocusNode = FocusNode();
 }
 
 class ColorPalette {

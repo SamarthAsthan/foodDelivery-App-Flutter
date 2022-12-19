@@ -41,7 +41,7 @@ class _MainMenuState extends State<MainMenu> {
   void bottomTapped(int index) {
     setState(() {
       bottomSelectedIndex = index;
-      Constants.screensPageViewController.animateToPage(index,
+      Constant.screensPageViewController.animateToPage(index,
           duration: Duration(milliseconds: 300), curve: Curves.ease);
     });
   }
@@ -57,7 +57,7 @@ class _MainMenuState extends State<MainMenu> {
               child: PageView(
                 allowImplicitScrolling: true,
                 physics: NeverScrollableScrollPhysics(),
-                controller: Constants.screensPageViewController,
+                controller: Constant.screensPageViewController,
                 onPageChanged: (index) {
                   setState(() {
                     bottomSelectedIndex = index;
@@ -78,7 +78,7 @@ class _MainMenuState extends State<MainMenu> {
           currentIndex: bottomSelectedIndex,
           items: buildBottomNavBarItems(),
           onTap: (index) {
-            Constants.screensPageViewController.animateToPage(index,
+            Constant.screensPageViewController.animateToPage(index,
                 duration: Duration(milliseconds: 200), curve: Curves.easeInOut);
           },
         ),
